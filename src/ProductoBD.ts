@@ -1,4 +1,7 @@
+import faker from 'faker'
 import Producto from './Producto'
+
+faker.locale = 'es'
 
 class ProductoBD {
   // private productos: Producto[];
@@ -71,6 +74,27 @@ class ProductoBD {
     return await Producto.deleteOne( {id })
   }
 
+  getMocksProductos ( cantidad: Number ) {
+    let productos = []
+    
+    if(cantidad == 0) {
+      throw Error('No hay productos')
+    } 
+
+    if(!cantidad) {
+      cantidad = 10
+    }
+
+    for(let i = 0; i < cantidad; i++) {
+      productos.push({
+        id: i,
+        title: faker.commerce.productName(),
+        price: faker.commerce.price(),
+        thumbnail: faker.image.imageUrl()
+      })
+    } 
+    return productos
+  }
 
 }
 
